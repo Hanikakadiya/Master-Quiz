@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+
+{% block title %}About | IT Quiz Master{% endblock title %}
+
+{% block body %}
+<main class="about-section py-5">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7 animate-fade-in-left">
+                <h1 class="display-3 fw-bold mb-4">About <span class="text-primary">IT Quiz Master</span> 🚀</h1>
+                <p class="lead text-muted mb-5">IT Quiz Master is your go-to platform for mastering IT skills. Test your knowledge, track your progress, and compete with a global community—all with fun and ease!</p>
+
+                <div class="row g-4 features-grid">
+                    <div class="col-md-6">
+                        <div class="feature-card shadow-sm h-100">
+                            <div class="icon text-primary mb-3">🎓</div>
+                            <h3 class="h5 fw-bold mb-2">Learn & Improve</h3>
+                            <p class="text-muted">Comprehensive IT questions to help you grow.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card shadow-sm h-100">
+                            <div class="icon text-primary mb-3">📱</div>
+                            <h3 class="h5 fw-bold mb-2">Mobile Friendly</h3>
+                            <p class="text-muted">Responsive design for quizzes on any device.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card shadow-sm h-100">
+                            <div class="icon text-primary mb-3">📊</div>
+                            <h3 class="h5 fw-bold mb-2">Track Progress</h3>
+                            <p class="text-muted">Monitor your performance with detailed analytics.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card shadow-sm h-100">
+                            <div class="icon text-primary mb-3">👥</div>
+                            <h3 class="h5 fw-bold mb-2">Compete</h3>
+                            <p class="text-muted">Challenge others on global leaderboards.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5 animate-fade-in-right">
+                <div class="stats-card p-5 rounded-4 shadow-lg">
+                    <h2 class="right-title display-6 fw-bold mb-4 text-center">Our Achievements</h2>
+                    <div class="stats d-flex flex-column gap-4">
+                        <div class="stat d-flex flex-column align-items-center">
+                            <div class="stat-number text-primary fw-bold">80+</div>
+                            <div class="stat-label text-muted">QUIZ QUESTIONS</div>
+                        </div>
+                        <div class="stat d-flex flex-column align-items-center">
+                            <div class="stat-number text-primary fw-bold">6</div>
+                            <div class="stat-label text-muted">CATEGORIES</div>
+                        </div>
+                        <div class="stat d-flex flex-column align-items-center">
+                            <div class="stat-number text-primary fw-bold">30s</div>
+                            <div class="stat-label text-muted">PER QUESTION</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block custom_css %}
+<style>
+    /* General Body Styling */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa; /* Light background for the whole page */
+        color: #333;
+    }
+
+    /* Section Padding */
+    .about-section {
+        padding-top: 80px; /* More space from the header */
+        padding-bottom: 80px;
+    }
+
+    /* Container for centering content */
+    .container {
+        max-width: 1200px; /* Max width for content */
+    }
+
+    /* Left Column Styling */
+    .about-left h1 {
+        font-size: 3.5em;
+        margin-bottom: 25px;
+        line-height: 1.1;
+    }
+
+    .about-left p {
+        font-size: 1.2em;
+        color: #555;
+        margin-bottom: 40px;
+        line-height: 1.6;
+    }
+
+    /* Feature Cards Grid */
+    .features-grid .col-md-6 {
+        display: flex; /* Ensures cards fill height */
+    }
+
+    .feature-card {
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #e9ecef; /* Subtle border */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+    }
+
+    .feature-card .icon {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+    }
+
+    .feature-card h3 {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+    }
+
+    .feature-card p {
+        font-size: 1em;
+        color: #6c757d;
+    }
+
+    /* Right Column Styling */
+    .about-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stats-card {
+        background: linear-gradient(135deg, #ffffff, #f0f2f5); /* Soft gradient */
+        border: 1px solid #e9ecef;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stats-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .right-title {
+        font-size: 2.2em;
+        color: #343a40;
+    }
+
+    /* Stats Cards */
+    .stats {
+        gap: 30px; /* More vertical spacing */
+    }
+
+    .stat {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 3.8em;
+        font-weight: 900; /* Extra bold */
+        line-height: 1;
+        color: var(--bs-primary); /* Using primary theme color */
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        font-size: 1.1em;
+        font-weight: 500;
+        color: #6c757d;
+        text-transform: uppercase;
+    }
+
+    /* Animations */
+    .animate-fade-in-left {
+        opacity: 0;
+        transform: translateX(-50px);
+        animation: fadeInLeft 0.8s ease-out forwards;
+    }
+
+    .animate-fade-in-right {
+        opacity: 0;
+        transform: translateX(50px);
+        animation: fadeInRight 0.8s ease-out forwards;
+        animation-delay: 0.2s; /* Slight delay for right side */
+    }
+
+    @keyframes fadeInLeft {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeInRight {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+        .about-left h1 {
+            font-size: 2.8em;
+        }
+        .about-left p {
+            font-size: 1.1em;
+        }
+        .feature-card {
+            padding: 20px;
+        }
+        .feature-card .icon {
+            font-size: 2em;
+        }
+        .stat-number {
+            font-size: 3em;
+        }
+        .right-title {
+            font-size: 1.8em;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .about-section {
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+        .about-left h1 {
+            font-size: 2.3em;
+        }
+        .about-left p {
+            font-size: 1em;
+        }
+        .feature-card h3 {
+            font-size: 1.1em;
+        }
+        .stats-card {
+            padding: 30px 20px;
+        }
+        .stat-number {
+            font-size: 3em;
+        }
+        .stat-label {
+            font-size: 1em;
+        }
+    }
+</style>
+{% endblock %}

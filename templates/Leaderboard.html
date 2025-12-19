@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block title %}Leaderboard | IT Quiz Master{% endblock %}
+
+{% block body %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5 animate-fade-in-up">
+            <h2 class="display-4 fw-bold mb-2 text-gradient" aria-label="Leaderboard Title">
+                Leaderboard <i class="fas fa-trophy text-warning ms-2" aria-hidden="true"></i>
+            </h2>
+            <p class="lead text-muted">
+                See the top performers across all quiz categories and track your rank!
+            </p>
+        </div>
+
+        <div class="card shadow-lg rounded-5 overflow-hidden mb-5 border-0">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table leaderboard-table table-hover mb-0">
+                        <thead class="gradient-header text-white text-uppercase fs-6">
+                            <tr>
+                                <th scope="col" class="py-3 text-center" aria-label="Rank">#</th>
+                                <th scope="col" class="py-3">User</th>
+                                <th scope="col" class="py-3">Category</th>
+                                <th scope="col" class="py-3">Score</th>
+                                <th scope="col" class="py-3 d-none d-sm-table-cell">Correct</th>
+                                <th scope="col" class="py-3 d-none d-sm-table-cell">Incorrect</th>
+                                <th scope="col" class="py-3 d-none d-md-table-cell">Time</th>
+                                <th scope="col" class="py-3 d-none d-lg-table-cell">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in page_obj %}
+                            <tr class="rank-row animate-fade-in-up shadow-sm" tabindex="0">
+                                <td class="text-center fw-bold fs-5 text-primary">
+                                    {{ page_obj.start_index|add:forloop.counter0 }}
+                                </td>
+                                <td class="fw-semibold text-start text-dark">
+                                    <i class="fas fa-user-circle me-2 text-muted"></i> 
+                                    
+                                    {# FIX: PRIORITIZE GUEST NAME for display #}
+                                    {% if result.guest_name %}
+                                        <strong style="color: #28a745;">{{ result.guest_name }}</strong>
+                                    {% elif result.user %}
+                                        {# Masked logged-in username #}
+                                        {{ result.user.username|slice:":4" }}****
+                                    {% else %}
+                                        {# Fallback for unknown #}
+                                        ****
+                                    {% endif %}
+                                </td>
+                                <td class="text-secondary">
+                                    {{ result.category.name }}
+                                </td>
+                                <td>
+                                    <span class="badge score-badge bg-gradient-primary fs-6 shadow-sm">
+                                        {{ result.score }}
+                                    </span>
+                                </td>
+                                <td class="d-none d-sm-table-cell text-success fw-bold">
+                                    {{ result.correct_answers }}
+                                </td>
+                                <td class="d-none d-sm-table-cell text-danger fw-bold">
+                                    {{ result.incorrect_answers }}
+                                </td>
+                                <td class="d-none d-md-table-cell text-muted" title="{{ result.time_taken|floatformat:'2' }} seconds">
+                                    ⏱ {{ result.time_taken }}
+                                </td>
+                                <td class="d-none d-lg-table-cell text-muted" title="{{ result.created_at }}">
+                                    📅 {{ result.created_at|date:"M d, Y" }}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8" class="text-center py-4 text-muted fst-italic">
+                                    No one has taken a quiz yet. Be the first to get on the board!
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {# Pagination Section #}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center pagination-lg">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link rounded-circle me-1" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        &laquo;
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link rounded-circle me-1" aria-disabled="true">&laquo;</span>
+                </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link rounded-circle me-1">{{ num }}</span>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link rounded-circle me-1" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link rounded-circle ms-1" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        &raquo;
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link rounded-circle ms-1" aria-disabled="true">&raquo;</span>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</section>
+
+{# NOTE: The "Find Your Score" popup was removed as requested earlier. #}
+{% endblock %}
+
+{% block js %}
+<script>
+    // No specific JavaScript for the leaderboard feature remains here.
+</script>
+{% endblock js %}
+
+{% block custom_css %}
+<style>
+    /* ... (CSS remains unchanged) ... */
+    .text-gradient {
+        background: linear-gradient(90deg, #007bff, #6610f2);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .leaderboard-table {
+        border-collapse: separate !important;
+        border-spacing: 0 12px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .gradient-header {
+        background: linear-gradient(135deg, #007bff, #6610f2);
+        box-shadow: 0 4px 8px rgba(102, 16, 242, 0.4);
+        border-radius: 12px 12px 0 0;
+    }
+
+    .leaderboard-table th {
+        font-weight: 700;
+        text-align: center;
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+        user-select: none;
+    }
+
+    .leaderboard-table tbody tr {
+        background: #fff;
+        border-radius: 12px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .leaderboard-table tbody tr:nth-child(odd) {
+        background: #f9faff;
+    }
+
+    .leaderboard-table tbody tr:hover {
+        background: #e1e9ff;
+        transform: scale(1.02);
+        box-shadow: 0 8px 24px rgba(0, 123, 255, 0.3);
+        z-index: 1;
+    }
+
+    .leaderboard-table td {
+        vertical-align: middle;
+        text-align: center;
+        padding-top: 12px !important;
+        padding-bottom: 12px !important;
+        font-size: 1rem;
+    }
+
+    .leaderboard-table td.text-start {
+        text-align: left;
+        font-weight: 600;
+        color: #222;
+    }
+</style>
+{% endblock %}

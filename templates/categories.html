@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block title %}Categories | IT Quiz Master{% endblock title %}
+
+{% block body %}
+<section id="categories" class="section-page py-5">
+    <div class="container">
+        <div class="text-center mb-5 animate-fade-in-up">
+            <h2 class="display-4 fw-bold mb-3">Choose Your Challenge 🚀</h2>
+            <p class="lead text-muted">Select a category to begin your quiz adventure and test your IT knowledge!</p>
+        </div>
+
+        <div class="row g-4 justify-content-center" id="categoriesGrid">
+            {% for category in categories %}
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4 d-flex">
+                <div class="card h-100 category-card shadow-lg rounded-4 border-0 transition-3d-hover">
+                    <div class="card-body p-4 text-center">
+                        <h5 class="card-title fw-bold mb-2">{{ category.name }}</h5>
+                        <p class="card-text text-muted mb-3">{{ category.description }}</p>
+
+                        {% if category.difficulty %}
+                        <div class="mb-3">
+                            <span class="badge rounded-pill bg-dark text-white p-2">
+                                {{ category.difficulty|upper }}
+                            </span>
+                        </div>
+                        {% endif %}
+
+                        <div class="mt-4">
+                            <button 
+                                onclick="openQuizModal({{ category.id }}, '{{ category.name }}')" 
+                                class="btn btn-primary-gradient btn-lg w-75"
+                            >
+                                Start Quiz <i class="fas fa-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-warning text-center" role="alert">
+                    <h4 class="alert-heading">Oops! No quizzes yet.</h4>
+                    <p>It looks like we're still building our quiz categories. Please check back later!</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="quizModal" tabindex="-1" aria-labelledby="quizModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg rounded-4">
+        
+        <form id="quiz-start-form" method="POST" action="">
+            {% csrf_token %} <div class="modal-header bg-primary text-white rounded-top">
+                <h5 class="modal-title" id="quizModalLabel">Start Quiz</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="mb-3">Please enter your name to begin the quiz:</p>
+                <input type="text" name="guest_name" id="usernameInput" class="form-control form-control-lg mb-3"
+                 placeholder="Enter your name" required />
+                
+                <button type="submit" class="btn btn-primary-gradient btn-lg w-100">
+                    Let's Go! 🚀
+                </button>
+                </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+{% endblock body %}
+
+{% block js %}
+<script>
+    // Renamed function for clarity
+    function openQuizModal(categoryId, categoryName) {
+        
+        const quizStartForm = document.getElementById('quiz-start-form');
+        const usernameInput = document.getElementById('usernameInput');
+
+        // 1. Set the form's action URL dynamically (e.g., /quiz/1/)
+        quizStartForm.action = `/quiz/${categoryId}/`; 
+        
+        // 2. Update the modal's title
+        document.getElementById("quizModalLabel").textContent = `Start Quiz: ${categoryName}`;
+        
+        // 3. Try to pre-fill the name if it was previously saved in local storage
+        const storedName = localStorage.getItem("quiz_username");
+        usernameInput.value = storedName || "";
+
+        // 4. Show the modal
+        const modal = new bootstrap.Modal(document.getElementById('quizModal'));
+        modal.show();
+        
+        // Focus on the input field
+        usernameInput.focus();
+    }
+
+    // Attach event listener to the form for validation and local storage
+    document.addEventListener('DOMContentLoaded', () => {
+        const quizStartForm = document.getElementById('quiz-start-form');
+        const usernameInput = document.getElementById('usernameInput');
+
+        quizStartForm.addEventListener('submit', function(event) {
+            const username = usernameInput.value.trim();
+
+            if (username === "") {
+                event.preventDefault(); // Stop the form if the name is empty
+                alert("⚠️ Please enter your name to continue.");
+                return;
+            }
+            
+            // Save the name to local storage before submitting the POST request
+            localStorage.setItem("quiz_username", username);
+
+            // The form will now submit a POST request to the URL set by openQuizModal, 
+            // which your Django view is ready to handle.
+        });
+    });
+</script>
+{% endblock js %}
+
+{% block custom_css %}
+<style>
+    .modal-content {
+        border: none;
+        overflow: hidden;
+    }
+
+    .modal-header {
+        border-bottom: none;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+    .category-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .category-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+    .btn-primary-gradient {
+        background: linear-gradient(45deg, #007bff, #00b3e7);
+        border: none;
+        color: white;
+    }
+    .btn-primary-gradient:hover {
+        background: linear-gradient(45deg, #0056b3, #007bff);
+        color: white;
+    }
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock custom_css %}

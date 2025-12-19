@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home - IT Quiz Platform
+{% endblock title %}
+
+{% block body %}
+
+    <section id="home" class="section-page active">
+        <div class="hero-section">
+            <div class="container">
+                <div class="row align-items-center min-vh-100 g-5">
+                    <div class="col-lg-6 text-center text-lg-start animate-fade-in-left">
+                        <h1 class="display-4 fw-bold mb-4">Master Your <span class="text-primary animate-pulse">IT Skills</span> 🧠</h1>
+                        <p class="lead mb-4 text-muted">Ready to test your knowledge? Our comprehensive platform offers interactive quizzes 
+                            across multiple IT categories. Challenge yourself, track your progress, and climb the global leaderboards!</p>
+                        
+                        <ul class="list-unstyled feature-list mb-5">
+                            <li class="d-flex align-items-center mb-3">
+                                <i class="fas fa-clock text-primary me-3 fa-lg"></i>
+                                <span>**Interactive timed quizzes** to test your speed and accuracy.</span>
+                            </li>
+                            <li class="d-flex align-items-center mb-3">
+                                <i class="fas fa-chart-line text-primary me-3 fa-lg"></i>
+                                <span>**Real-time progress tracking** to see your growth.</span>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <i class="fas fa-trophy text-primary me-3 fa-lg"></i>
+                                <span>**Global leaderboards** to compete with a community of learners.</span>
+                            </li>
+                        </ul>
+                        
+                        <div class="d-grid d-md-block cta-buttons mt-5">
+                            <a href="{% url 'categories' %}" class="btn btn-primary btn-lg me-md-3 mb-3 mb-md-0">
+                                <i class="fas fa-play me-2"></i>Start Quiz
+                            </a>
+                            <a href="{% url 'about' %}" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-info-circle me-2"></i>Learn More
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 animate-fade-in-right">
+                        <div class="hero-image d-flex justify-content-center justify-content-lg-end">
+                            <div class="quiz-preview-card card shadow-lg rounded-5 overflow-hidden">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="icon-box me-3">
+                                            <i class="fas fa-code text-white"></i>
+                                        </div>
+                                        <h5 class="card-title fw-bold text-dark mb-0">Web Development Quiz</h5>
+                                    </div>
+                                    
+                                    <div class="question-preview bg-light p-3 rounded mb-3">
+                                        <p class="text-dark fw-bold mb-2">Q1: Which tag is used to create an unordered list in HTML?</p>
+                                        <div class="option-item-preview d-flex align-items-center mb-2">
+                                            <span class="badge bg-secondary me-2">A</span>
+                                            <span class="text-muted">&lt;ol&gt;</span>
+                                        </div>
+                                        <div class="option-item-preview d-flex align-items-center mb-2">
+                                            <span class="badge bg-primary me-2">B</span>
+                                            <span class="text-dark fw-bold">&lt;ul&gt;</span>
+                                        </div>
+                                        <div class="option-item-preview d-flex align-items-center mb-2">
+                                            <span class="badge bg-secondary me-2">C</span>
+                                            <span class="text-muted">&lt;li&gt;</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="quiz-progress-bar flex-grow-1 me-3">
+                                            <div class="progress rounded-pill" style="height: 8px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <span class="progress-text fw-bold text-success">20%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <style>
+        /* Animation CSS for hero section */
+.animate-fade-in-left {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: fadeInLeft 0.8s ease-out forwards;
+}
+
+.animate-fade-in-right {
+    opacity: 0;
+    transform: translateX(20px);
+    animation: fadeInRight 0.8s ease-out forwards;
+    animation-delay: 0.2s;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes fadeInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        color: var(--bs-primary);
+    }
+    50% {
+        transform: scale(1.03);
+        color: #00b3e7; /* A slightly different shade for a nice effect */
+    }
+}
+
+/* Custom styling for the quiz preview card */
+.quiz-preview-card .icon-box {
+    background-color: var(--bs-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+    </style>
+{% endblock body %}
+
+{% block js %}
+{% comment %} <script src="{% static 'js/home.js' %}"></script> {% endcomment %}
+{% endblock %}

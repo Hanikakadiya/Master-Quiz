@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ category.name }} Quiz | IT Quiz Master
+{% endblock title %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 mx-auto">
+        <section class="container py-5">
+
+            <h2 class="mb-4 text-center">{{ category.name }} Quiz</h2>
+
+            <div id="timer" class="mb-3 text-center" style="font-size: 20px; font-weight: bold; color: red;">
+                Time Left: <span id="time">30</span>s
+            </div>
+
+            <form id="quizForm" method="POST" action="{% url 'submit_quiz' category.id %}">
+                {% csrf_token %}  {# Protects against CSRF attacks #}
+
+                <!-- {# Loop through all questions in this category #} -->
+                {% for q in questions %}
+                    <div class="mb-4 p-3 border rounded shadow-sm">
+                     <p><strong>Q{{ forloop.counter }}. {{ q.text }}</strong></p>     <!-- {# Display question text #} -->
+
+                        <!-- {# Loop through all options for each question #} -->
+                        {% for opt in q.options.all %}
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" 
+                                    name="question_{{ q.id }}"  {# Radio input for this question #}
+                                    value="{{ opt.id }}"        {# Option value = option ID #}
+                                     id="opt{{ opt.id }}">     <!--  {# Unique ID for label linking #} -->
+                                <label class="form-check-label" for="opt{{ opt.id }}">
+                                     {{ opt.text }}          <!--    {# Display option text #} -->
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                <!-- {# Submit button at the end of the form #} -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Submit Quiz</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+
+<script>
+// Total time (in seconds) for the quiz
+let totalTime = 30;
+
+// DOM element that displays remaining time
+const timeDisplay = document.getElementById('time');
+
+// Get reference to the quiz form
+const quizForm = document.getElementById('quizForm');
+
+// Record start time (when page loads)
+let startTime = new Date().getTime();
+
+// Countdown timer function: runs every second
+const timer = setInterval(() => {
+    totalTime--;  // Decrease time
+    timeDisplay.textContent = totalTime;  // Update the DOM
+
+    // If time runs out, stop the timer and auto-submit the form
+    if (totalTime <= 0) {
+        clearInterval(timer);  // Stop timer
+        alert("Time's up! Submitting your quiz...");
+
+        // Calculate time taken
+        const endTime = new Date().getTime();
+        const timeTakenInput = document.createElement("input");
+        timeTakenInput.type = "hidden";
+        timeTakenInput.name = "time_taken";
+        timeTakenInput.value = Math.round((endTime - startTime) / 1000);  // in seconds
+        quizForm.appendChild(timeTakenInput);
+
+        quizForm.submit();  // Submit the quiz
+    }
+}, 1000);  // 1000ms = 1 second
+
+// If user submits the quiz manually before time ends
+quizForm.addEventListener('submit', () => {
+    const endTime = new Date().getTime();
+    const timeTakenInput = document.createElement("input");
+    timeTakenInput.type = "hidden";
+    timeTakenInput.name = "time_taken";
+    timeTakenInput.value = Math.round((endTime - startTime) / 1000);  // Time taken in seconds
+    quizForm.appendChild(timeTakenInput);
+});
+</script>
+{% endblock body %}

@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}Results | IT Quiz Master{% endblock title %}
+
+{% block body %}
+<div class="main-content">
+    <section class="container py-5 text-center">
+        <h2 class="display-4 fw-bold mb-4 animate-fade-in-up">
+            🎉 Quiz Complete! 🎉
+        </h2>
+
+        <!-- Results Card -->
+        <div class="card p-5 shadow-lg rounded-4 animate-fade-in-up">
+            <h4 class="mb-3 fs-4">
+                📘 Category: <span class="text-primary">{{ category.name }}</span>
+            </h4>
+
+            <!-- Percentage Score -->
+            <div class="percentage-score">
+                {{ percentage|floatformat:2 }}%
+            </div>
+
+            <p class="fs-5 mt-4"><strong>Score:</strong> {{ score }} / {{ total }}</p>
+            <p class="fs-5 text-success"><strong>✅ Correct Answers:</strong> {{ correct }}</p>
+            <p class="fs-5 text-danger"><strong>❌ Incorrect Answers:</strong> {{ incorrect }}</p>
+            <p class="fs-5"><strong>⏱ Time Taken:</strong> 
+                {% if time_taken %}
+                    {{ time_taken }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </p>
+
+            <div class="mt-4 d-flex justify-content-center flex-wrap gap-3">
+                <a href="{% url 'quiz' category.id %}" class="btn btn-primary px-4">
+                    🔁 Retry Quiz
+                </a>
+                <a href="{% url 'categories' %}" class="btn btn-outline-primary px-4">
+                    📚 Choose Another Category
+                </a>
+                <a href="{% url 'leaderboard' %}" class="btn btn-success px-4">
+                    🏆 View Leaderboard
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-5 p-4 bg-light rounded shadow-sm animate-fade-in-up">
+            <h3 class="fw-bold mb-3">🚀 Keep Improving Your IT Skills!</h3>
+            <p class="lead">Every quiz gives you a step closer to mastery.</p>
+            <ul class="list-unstyled">
+                <li>✅ Practice regularly to improve speed & accuracy.</li>
+                <li>✅ Challenge yourself with harder quizzes.</li>
+                <li>✅ Share your achievements with peers.</li>
+            </ul>
+            <p class="text-muted fst-italic">"The more you learn, the more you grow."</p>
+        </div>
+
+        <div class="mt-4 animate-fade-in-up">
+            <a href="{% url 'categories' %}" class="btn btn-warning btn-lg">
+                🔥 Explore New Categories Now!
+            </a>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block custom_css %}
+<style>
+    .percentage-score {
+        font-size: 3rem;
+        font-weight: 900;
+        margin: 20px 0;
+        color: #6610f2;
+        animation: pulse-blink 1.5s infinite;
+        display: inline-block;
+    }
+    /* {# Styles the percentage score text to be big, bold, purple and animated with pulsing effect #} */
+
+    @keyframes pulse-blink {
+        0% {
+            opacity: 1;
+            transform: scale(1);
+            text-shadow: 0 0 10px rgba(102, 16, 242, 0.5);
+        }
+        50% {
+            opacity: 0.6;
+            transform: scale(1.05);
+            text-shadow: 0 0 20px rgba(102, 16, 242, 0.8);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+            text-shadow: 0 0 10px rgba(102, 16, 242, 0.5);
+        }
+    }
+    /* {# Defines the animation frames for the pulsing and blinking effect of the percentage score #} */
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    /* {# Adds a fade-in and upward movement animation for smooth appearance on page load #} */
+
+    .card {
+        border: none;
+    }
+</style>
+{% endblock %}

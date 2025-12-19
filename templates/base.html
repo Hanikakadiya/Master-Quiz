@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}IT Quiz Master{% endblock title %}</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.8-dist/css/bootstrap.min.css' %}">
+
+    <!-- Font Awesome CSS (Offline) -->
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}"><i class="fas fa-brain"></i> IT Quiz Master</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'categories' %}">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="mt-5 pt-4">
+        {% block body %}{% endblock body %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <h2><i class="fas fa-brain"></i> IT Quiz Master</h2>
+                <p>Challenge your IT knowledge, track progress, and compete with others. Learn while having fun with our interactive quizzes!</p>
+            </div>
+
+            <div class="footer-links">
+                <h3><i class="fas fa-link"></i> Quick Links</h3>
+                <ul>
+                    <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/categories/"><i class="fas fa-th-list"></i> Categories</a></li>
+                    <li><a href="/leaderboard/"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                    <li><a href="/about/"><i class="fas fa-info-circle"></i> About</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h3><i class="fas fa-address-book"></i> Contact Us</h3>
+                <p><i class="fas fa-envelope"></i> support@itquizmaster.com</p>
+                <p><i class="fas fa-phone"></i> +91 1234 567 890</p>
+                {% comment %} <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div> {% endcomment %}
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 IT Quiz Master | All Rights Reserved | Designed with ❤️</p>
+        </div>
+    </footer>
+
+    <!-- Inline CSS -->
+    <style>
+        .navbar {
+           background: var(--gradient-primary) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .site-footer {
+           background: white !important;
+            color: #000;
+            padding: 50px 20px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-about,
+        .footer-links,
+        .footer-contact {
+            flex: 1 1 300px;
+            margin: 20px;
+        }
+
+        .footer-about h2 {
+            font-size: 1.8rem;
+            color: #00aaff;
+        }
+
+        .footer-links ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links ul li a {
+            color: #000;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .footer-links ul li a:hover {
+            color: #007bff;
+        }
+
+        .footer-contact p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            background: #333;
+            color: #fff;
+            margin-right: 10px;
+            padding: 12px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: #007bff;
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-about,
+            .footer-links,
+            .footer-contact {
+                margin: 15px 0;
+            }
+        }
+    </style>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="{% static 'bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js' %}"></script>
+
+    {% block js %}{% endblock %}
+</body>
+
+</html>
