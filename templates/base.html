@@ -8,8 +8,9 @@
     <title>{% block title %}IT Quiz Master{% endblock title %}</title>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-    <!-- Bootstrap CSS -->
+{% load static %}
+<link rel="stylesheet" href="{% static 'bootstrap-5.3.8-dist/css/bootstrap.min.css' %}">
+<script src="{% static 'bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js' %}"></script>    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'bootstrap-5.3.8-dist/css/bootstrap.min.css' %}">
 
     <!-- Font Awesome CSS (Offline) -->
