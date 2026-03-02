@@ -1,14 +1,15 @@
 {
+  "version": 2,
   "builds": [
     {
-      "src": "masterquiz/wsgi.py",
+      "src": "MasterQuiz/wsgi.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "masterquiz/wsgi.py"
+      "dest": "MasterQuiz/wsgi.py"
     }
   ]
 }
