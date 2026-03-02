@@ -1,24 +1,11 @@
 {
-  "version": 2,
   "builds": [
     {
       "src": "MasterQuiz/wsgi.py",
-      "use": "@vercel/python",
-      "config": { 
-        "runtime": "python3.12"
-      }
+      "use": "@vercel/python"
     }
   ],
-  "functions": {
-    "MasterQuiz/wsgi.py": {
-      "excludeFiles": "{static/**,staticfiles/**,media/**,tests/**}"
-    }
-  },
   "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
     {
       "src": "/(.*)",
       "dest": "MasterQuiz/wsgi.py"
