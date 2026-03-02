@@ -3,14 +3,15 @@
   "builds": [
     {
       "src": "MasterQuiz/wsgi.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb" }
     }
   ],
   "routes": [
-   
     {
       "src": "/(.*)",
       "dest": "MasterQuiz/wsgi.py"
     }
-  ]
+  ],
+  "buildCommand": "bash build_files.sh"
 }
