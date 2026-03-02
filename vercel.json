@@ -3,12 +3,7 @@
   "builds": [
     {
       "src": "MasterQuiz/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "runtime": "python3.12" }
-    },
-    {
-      "src": "static/**",
-      "use": "@vercel/static"
+      "use": "@vercel/python"
     }
   ],
   "routes": [
